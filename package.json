@@ -1,0 +1,20 @@
+{
+  "name": "gestion-dinamica",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --env-file=.env src/index.js",
+    "dev": "node --watch --env-file=.env src/index.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "decimal.js": "^10.6.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.15.0"
+  }
+}
