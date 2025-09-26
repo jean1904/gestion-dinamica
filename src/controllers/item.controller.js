@@ -33,6 +33,13 @@ export async function getItem(req, res) {
 export async function createItemHandler(req, res) {
   try {
     const { name, barcode } = req.body;
+
+    if(barcode && barcode !== '') {
+        const alreadyExists = await searchItemByBarcode(barcode, req.tenant.id);
+        if (alreadyExists.length > 0) {
+            return res.status(400).json({ error: 'El código de barras ya existe' });
+        }
+    }
     const item = await createItem({ name, barcode, tenantId: req.tenant.id });
     res.status(201).json(item);
   } catch (err) {

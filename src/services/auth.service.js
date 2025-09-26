@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { getTenantByEmail, createTenant } from '../models/tenant.model.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = '2h';
+const JWT_EXPIRES_IN = '10h';
 
 export async function loginTenant(email, password) {
   const tenant = await getTenantByEmail(email);
@@ -36,4 +36,8 @@ export async function registerTenant({ name, email, password }) {
   const hashedPassword = await bcrypt.hash(password, 10);
   const tenant = await createTenant({ name, email, password: hashedPassword });
   return tenant;
+}
+export async function emailExists({ email }) {
+  const tenant = await getTenantByEmail(email);
+  return !!tenant;
 }

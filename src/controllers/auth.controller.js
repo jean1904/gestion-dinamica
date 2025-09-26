@@ -1,4 +1,4 @@
-import { loginTenant, registerTenant } from '../services/auth.service.js';
+import { loginTenant, registerTenant, emailExists } from '../services/auth.service.js';
 
 export async function loginHandler(req, res) {
   try {
@@ -17,6 +17,11 @@ export async function registerHandler(req, res) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
 
+    const alreadyExists = await emailExists({ email });
+
+    if(alreadyExists) {
+      return res.status(400).json({ error: 'El email ya está registrado' });
+    }
     const tenant = await registerTenant({ name, email, password });
     res.status(201).json({ tenant });
   } catch (err) {
