@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  node:
+    image: node:20-alpine
+    working_dir: /app
+    user: node
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    command: sh -c 'tail -f /dev/null'
+
+  mariadb:
+      image: mariadb:10.4.22
+      volumes:
+          - ./database:/var/lib/mysql
+          - .:/app
+      ports:
+          - "3306:3306"
+      environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: gestion_dinamicadb
+          MYSQL_USER: gestion_dinamica
+          MYSQL_PASSWORD: gestion_dinamica
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    depends_on:
+      - mariadb
