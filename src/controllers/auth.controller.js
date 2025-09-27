@@ -6,6 +6,7 @@ export async function loginHandler(req, res) {
     const tenant = await loginTenant(email, password);
     res.json({ tenant });
   } catch (err) {
+    console.log(err);
     res.status(401).json({ error: err.message });
   }
 }

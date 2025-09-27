@@ -24,19 +24,27 @@ export async function deleteTenant(id) {
   return { deleted: true };
 }
 
-export async function getTenantByEmail(email) {
-  const [rows] = await db.query('SELECT * FROM tenants WHERE email = ?', [email]);
-  return rows[0];
-}
-
 export async function createTenant({ name, email, password }) {
-  const [result] = await db.query(
-    'INSERT INTO tenants (name, email, password) VALUES (?, ?, ?)',
-    [name, email, password]
+  // Crear el tenant solo con el nombre
+  const [tenantResult] = await db.query(
+    'INSERT INTO tenants (name) VALUES (?)',
+    [name]
   );
+  const tenantId = tenantResult.insertId;
+
+  // Crear el usuario manager asociado al tenant
+  await db.query(
+    'INSERT INTO users (tenant_id, email, password, rol, status) VALUES (?, ?, ?, ?, ?)',
+    [tenantId, email, password, 'manager', 1]
+  );
+
   return {
-    id: result.insertId,
+    id: tenantId,
     name,
-    email,
+    manager: {
+      email,
+      rol: 'manager',
+      status: 1
+    }
   };
 }
