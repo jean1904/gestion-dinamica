@@ -22,6 +22,9 @@ export async function loginTenant(email, password) {
       user: {
         id: user.user_id,
         email: user.email,
+        role: user.role,
+        firstName: user.first_name,
+        lastName: user.last_name,
       }
     },
     JWT_SECRET,
@@ -37,13 +40,16 @@ export async function loginTenant(email, password) {
     user: {
       id: user.user_id,
       email: user.email,
+      role: user.role,
+      firstName: user.first_name,
+      lastName: user.last_name,
     }
   };
 }
 
-export async function registerTenant({ name, email, password }) {
+export async function registerTenant({ name, email, password, firstName, lastName }) {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const tenant = await createTenant({ name, email, password: hashedPassword });
+  const tenant = await createTenant({ name, email, password: hashedPassword, firstName, lastName });
   return tenant;
 }
 export async function emailExists({ email }) {

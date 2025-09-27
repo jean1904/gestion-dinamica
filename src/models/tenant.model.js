@@ -24,7 +24,7 @@ export async function deleteTenant(id) {
   return { deleted: true };
 }
 
-export async function createTenant({ name, email, password }) {
+export async function createTenant({ name, email, password, firstName, lastName }) {
   // Crear el tenant solo con el nombre
   const [tenantResult] = await db.query(
     'INSERT INTO tenants (name) VALUES (?)',
@@ -34,8 +34,8 @@ export async function createTenant({ name, email, password }) {
 
   // Crear el usuario manager asociado al tenant
   await db.query(
-    'INSERT INTO users (tenant_id, email, password, rol, status) VALUES (?, ?, ?, ?, ?)',
-    [tenantId, email, password, 'manager', 1]
+    'INSERT INTO users (tenant_id, email, password, first_name, last_name, role, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [tenantId, email, password, firstName, lastName, 'manager', 1]
   );
 
   return {
@@ -43,7 +43,9 @@ export async function createTenant({ name, email, password }) {
     name,
     manager: {
       email,
-      rol: 'manager',
+      firstName,
+      lastName,
+      role: 'manager',
       status: 1
     }
   };

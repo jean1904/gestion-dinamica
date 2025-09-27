@@ -13,8 +13,8 @@ export async function loginHandler(req, res) {
 
 export async function registerHandler(req, res) {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    const { name, email, password, firstName, lastName } = req.body;
+    if (!name || !email || !password || !firstName || !lastName) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
 
@@ -23,7 +23,7 @@ export async function registerHandler(req, res) {
     if(alreadyExists) {
       return res.status(400).json({ error: 'El email ya está registrado' });
     }
-    const tenant = await registerTenant({ name, email, password });
+    const tenant = await registerTenant({ name, email, password, firstName, lastName });
     res.status(201).json({ tenant });
   } catch (err) {
     res.status(500).json({ error: err.message });
