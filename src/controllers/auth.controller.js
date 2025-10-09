@@ -1,13 +1,29 @@
 import { loginTenant, registerTenant, emailExists } from '../services/auth.service.js';
 
-export async function loginHandler(req, res) {
+import { AppError, logUnhandledError } from '../utils/errorHandler.util.js';
+export async function loginHandler(req, res, next) {
   try {
     const { email, password } = req.body;
     const tenant = await loginTenant(email, password);
     res.json({ tenant });
-  } catch (err) {
-    console.log(err);
-    res.status(401).json({ error: err.message });
+  } catch (error) {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        error: {
+          code: error.code,
+          message: error.message,
+        },
+      });
+    }
+
+    // Error no manejable
+    logUnhandledError(error);
+    return res.status(500).json({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error inesperado del servidor',
+      },
+    });
   }
 }
 
@@ -25,7 +41,23 @@ export async function registerHandler(req, res) {
     }
     const tenant = await registerTenant({ name, email, password, firstName, lastName });
     res.status(201).json({ tenant });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        error: {
+          code: error.code,
+          message: error.message,
+        },
+      });
+    }
+
+    // Error no manejable
+    logUnhandledError(error);
+    return res.status(500).json({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error inesperado del servidor',
+      },
+    });
   }
 }

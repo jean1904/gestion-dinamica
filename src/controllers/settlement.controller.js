@@ -11,6 +11,7 @@ export async function createBatchHandler(req, res) {
     const batch = await saveBatchEntry({ items, operatingCosts, tenantId });
     res.status(201).json(batch);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err.message });
   }
 }

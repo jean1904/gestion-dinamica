@@ -2,16 +2,18 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { createTenant } from '../models/tenant.model.js';
 import { getUserByEmail } from '../models/user.model.js';
+import { AppError } from '../utils/errorHandler.util.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = '10h';
 
 export async function loginTenant(email, password) {
   const user = await getUserByEmail(email);
-  if (!user) throw new Error('Email o contraseña incorrectos');
+  if (!user) throw new AppError('VALIDATION_ERROR', 'Email o contraseña incorrectos');
 
   const match = await bcrypt.compare(password, user.password);
-  if (!match) throw new Error('Email o contraseña incorrectos');
+  if (!match) throw new AppError('VALIDATION_ERROR', 'Email o contraseña incorrectos');
+
 
   const token = jwt.sign(
     {
