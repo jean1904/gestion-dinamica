@@ -8,6 +8,12 @@ import settlementRoutes from './routes/settlement.routes.js';
 import priceRoutes from './routes/price.routes.js';*/
 import { jwtAuthMiddleware } from './middlewares/jwtAuth.middleware.js';
 
+// Middlewares
+import { tenantMiddleware } from './middlewares/tenant.middleware.js';
+
+import userRoutes from './modules/users/user.routes.js';
+import permissionRoutes from './modules/permissions/permission.routes.js';
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -16,6 +22,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tenants', jwtAuthMiddleware, tenantRoutes);
 app.use('/api/items', jwtAuthMiddleware, itemRoutes);
 app.use('/api/settlement', jwtAuthMiddleware, settlementRoutes);
+
+app.use('/api/users', jwtAuthMiddleware, tenantMiddleware, userRoutes);
+app.use('/api/permissions', jwtAuthMiddleware, tenantMiddleware, permissionRoutes);
 
 /*app.use('/api/suppliers', supplierRoutes);
 app.use('/api/prices', priceRoutes);*/
