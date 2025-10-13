@@ -47,9 +47,8 @@ export class UserService {
                 throw new Error('First name and last name are required');
             }
 
-            const emailExists = await this.userRepository.existsByEmail(
-                userData.email, 
-                requestingUser.tenant_id
+            const emailExists = await this.userRepository.emailExists(
+                userData.email
             );
             
             if (emailExists) {
@@ -92,9 +91,8 @@ export class UserService {
             }
 
             if (userData.email && userData.email !== existingUser.email) {
-                const emailExists = await this.userRepository.existsByEmail(
+                const emailExists = await this.userRepository.emailExists(
                     userData.email, 
-                    requestingUser.tenant_id, 
                     userId
                 );
                 

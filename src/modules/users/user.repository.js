@@ -1,8 +1,9 @@
 import { db } from '../../config/db.js';
 
 export class UserRepository {
-    async findById(userId) {
-        const [rows] = await db.query(
+    async findById(userId, connection = null) {
+        const dbToUse = connection || db;
+        const [rows] = await dbToUse.query(
             `SELECT id, tenant_id, email, first_name, last_name, role, status, 
                     created_at, updated_at 
             FROM users 
@@ -46,8 +47,9 @@ export class UserRepository {
         return rows;
     }
 
-    async create(userData) {
-        const [result] = await db.query(
+    async create(userData, connection = null) {
+        const dbToUse = connection || db;
+        const [result] = await dbToUse.query(
             `INSERT INTO users (tenant_id, email, password, first_name, last_name, role, status) 
             VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [
@@ -116,13 +118,13 @@ export class UserRepository {
         return true;
     }
 
-    async existsByEmail(email, tenantId, excludeUserId = null) {
+    async emailExists(email, excludeUserId = null) {
         let query = `SELECT COUNT(*) as count FROM users 
-                    WHERE email = ? AND tenant_id = ? AND deleted_at IS NULL`;
-        const params = [email, tenantId];
+                    WHERE email = ?`;
+        const params = [email];
 
         if (excludeUserId) {
-            query += ' AND id != ?';
+            query += ' AND id != s?';
             params.push(excludeUserId);
         }
 
