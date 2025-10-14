@@ -12,7 +12,6 @@ export class TenantService {
             const tenants = await this.tenantRepository.findAll(filters);
             return tenants;
         } catch (error) {
-            console.error('Error in getAllTenants:', error);
             throw new Error('Failed to fetch tenants');
         }
     }
@@ -27,8 +26,7 @@ export class TenantService {
 
             return tenant;
         } catch (error) {
-            console.error('Error in getTenantById:', error);
-            throw error;
+             throw error;
         }
     }
 
@@ -75,7 +73,6 @@ export class TenantService {
             
         } catch (error) {
             await connection.rollback();
-            console.error('Error in createTenantWithManager:', error);
             throw error;
         } finally {
             connection.release();
@@ -87,22 +84,18 @@ export class TenantService {
             const updatedTenant = await this.tenantRepository.update(tenantId, tenantData);
             return updatedTenant;
         } catch (error) {
-            console.error('Error in updateTenant:', error);
-            throw error;
+             throw error;
         }
     }
 
     async deleteTenant(tenantId) {
         try {
-            // Verificar que el tenant existe
             await this.getTenantById(tenantId);
 
-            // Soft delete del tenant
             await this.tenantRepository.softDelete(tenantId);
             return { message: 'Tenant deleted successfully' };
         } catch (error) {
-            console.error('Error in deleteTenant:', error);
-            throw error;
+             throw error;
         }
     }
 }
