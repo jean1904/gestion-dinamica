@@ -27,6 +27,6 @@ router.post('/', validateCreateTenant, (req, res) => tenantController.createTena
 
 router.put('/:id', validateUpdateTenant, (req, res) => tenantController.updateTenant(req, res));
 
-router.delete('/:id', (req, res) => tenantController.deleteUser(req, res));
+router.delete('/:id', (req, res) => tenantController.deleteTenant(req, res));
 
 export default router;

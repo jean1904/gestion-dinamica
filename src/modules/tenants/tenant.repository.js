@@ -41,6 +41,9 @@ export class TenantRepository {
     }
 
     async update(tenantId, tenantData) {
+        if (tenantId === 1) {
+            throw new Error('The system tenant cannot be modified.');
+        }
         const fields = [];
         const values = [];
 
@@ -70,6 +73,9 @@ export class TenantRepository {
     }
 
     async softDelete(tenantId) {
+        if (tenantId === 1) {
+            throw new Error('The system tenant cannot be deleted.');
+        }
         await db.query(
             'UPDATE tenants SET deleted_at = NOW() WHERE id = ?',
             [tenantId]

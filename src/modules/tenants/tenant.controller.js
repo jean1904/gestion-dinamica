@@ -92,12 +92,12 @@ export class TenantController {
         }
     }
 
-    async deleteUser(req, res) {
+    async deleteTenant(req, res) {
         try {
             const { id } = req.params;
             const requestingUser = req.user;
 
-            await this.tenantService.deleteUser(parseInt(id), requestingUser);
+            await this.tenantService.deleteTenant(parseInt(id), requestingUser);
 
             res.json({
                 success: true,
