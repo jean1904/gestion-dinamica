@@ -8,6 +8,15 @@
     "dev": "node --watch --env-file=.env src/index.js"
   },
   "type": "module",
+  "imports": {
+    "#utils/*": "./src/utils/*",
+    "#models/*": "./src/models/*",
+    "#services/*": "./src/services/*",
+    "#controllers/*": "./src/controllers/*",
+    "#middlewares/*": "./src/middlewares/*",
+    "#config/*": "./src/config/*",
+    "#modules/*": "./src/modules/*"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -16,6 +25,7 @@
     "decimal.js": "^10.6.0",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
+    "i18n": "^0.15.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.15.0",
     "nodemailer": "^7.0.9"

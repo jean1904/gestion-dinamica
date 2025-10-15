@@ -1,4 +1,4 @@
-import { db } from '../../config/db.js';
+import { db } from '#config/db.js';
 
 export class UserRepository {
     async findById(userId, connection = null) {
@@ -90,11 +90,6 @@ export class UserRepository {
             values.push(userData.status);
         }
 
-        if (userData.password !== undefined) {
-            fields.push('password = ?');
-            values.push(userData.password);
-        }
-
         if (fields.length === 0) {
             return this.findById(userId);
         }
@@ -124,7 +119,7 @@ export class UserRepository {
         const params = [email];
 
         if (excludeUserId) {
-            query += ' AND id != s?';
+            query += ' AND id != ?';
             params.push(excludeUserId);
         }
 

@@ -1,16 +1,19 @@
+import { AppError } from '#utils/errorHandler.util.js'; 
 export function tenantMiddleware(req, res, next) {
     if (!req.user) {
-        return res.status(401).json({
-            success: false,
-            message: 'Authentication required'
-        });
+        return next(new AppError(
+            'AUTHENTICATION_ERROR',
+            'errors.authentication.unauthorized',
+            401
+        ));
     }
 
     if (req.user.role === 'admin') {
-        return res.status(403).json({
-            success: false,
-            message: 'Admin cannot access tenant operations'
-        });
+        return next(new AppError(
+            'FORBIDDEN_ERROR',
+            'errors.authentication.admin_cannot_access_tenant',
+            403
+        ));
     }
     
     next();
@@ -18,17 +21,19 @@ export function tenantMiddleware(req, res, next) {
 
 export function managerMiddleware(req, res, next) {
     if (!req.user) {
-        return res.status(401).json({
-            success: false,
-            message: 'Authentication required'
-        });
+        return next(new AppError(
+            'AUTHENTICATION_ERROR',
+            'errors.authentication.unauthorized',
+            401
+        ));
     }
 
     if (req.user.role !== 'manager') {
-        return res.status(403).json({
-            success: false,
-            message: 'Only managers can perform this action',
-        });
+        return next(new AppError(
+            'FORBIDDEN_ERROR',
+            'errors.authentication.only_managers',
+            403
+        ));
     }
   
     next();

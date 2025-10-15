@@ -5,7 +5,7 @@ export class UserController {
         this.userService = userService;
     }
 
-    async getAllUsers(req, res) {
+    async getAllUsers(req, res, next) {
         try {
             const { tenant_id } = req.user;
             const { role, status } = req.query;
@@ -23,14 +23,11 @@ export class UserController {
                 total: users.length
             });
         } catch (error) {
-            res.status(500).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async getUserById(req, res) {
+    async getUserById(req, res, next) {
         try {
             const { id } = req.params;
             const { tenant_id } = req.user;
@@ -43,15 +40,11 @@ export class UserController {
                 data: formattedUser
             });
         } catch (error) {
-            const statusCode = error.message === 'User not found' ? 404 : 403;
-            res.status(statusCode).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async createUser(req, res) {
+    async createUser(req, res, next) {
         try {
             const userData = req.body;
             const requestingUser = req.user;
@@ -62,18 +55,14 @@ export class UserController {
             res.status(201).json({
                 success: true,
                 data: formattedUser,
-                message: 'User created successfully'
+                message: req.t('success.user.created')
             });
         } catch (error) {
-            const statusCode = error.message.includes('already in use') ? 409 : 400;
-            res.status(statusCode).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async updateUser(req, res) {
+    async updateUser(req, res, next) {
         try {
             const { id } = req.params;
             const userData = req.body;
@@ -90,32 +79,26 @@ export class UserController {
             res.json({
                 success: true,
                 data: formattedUser,
-                message: 'User updated successfully'
+                message: req.t('success.user.updated')
             });
         } catch (error) {
-            res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async deleteUser(req, res) {
+    async deleteUser(req, res, next) {
         try {
             const { id } = req.params;
             const requestingUser = req.user;
 
-            await this.userService.deleteUser(parseInt(id), requestingUser);
+           await this.userService.deleteUser(parseInt(id), requestingUser);
 
             res.json({
                 success: true,
-                message: 'User deleted successfully'
+                message: req.t('success.user.deleted')
             });
         } catch (error) {
-            res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 }

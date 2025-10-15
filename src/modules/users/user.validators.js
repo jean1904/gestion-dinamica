@@ -1,79 +1,42 @@
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
+import { handleValidationErrors } from '#middlewares/validation.middleware.js';
 
 export const validateCreateUser = [
     body('email')
-        .notEmpty().withMessage('Email requerido')
-        .isEmail().withMessage('El formato del email es inválido'),
-    
-    body('password')
-        .notEmpty().withMessage('contraseña requerida')
-        .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
+        .notEmpty().withMessage('errors.validation.required')
+        .isEmail().withMessage('errors.validation.invalid'),
     
     body('firstName')
-        .notEmpty().withMessage('Nombre requerido')
+        .notEmpty().withMessage('errors.validation.required')
         .trim()
-        .isLength({ min: 2 }).withMessage('El nombre debe tener al menos 2 caracteres'),
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
     
     body('lastName')
-        .notEmpty().withMessage('Apellido requerido')
+        .notEmpty().withMessage('errors.validation.required')
         .trim()
-        .isLength({ min: 2 }).withMessage('El apellido debe tener al menos 2 caracteres'),
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
     
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const errorMap = {};
-            errors.array().forEach(err => {
-                if (!errorMap[err.path]) {
-                    errorMap[err.path] = err.msg;
-                }
-            });
-            
-            return res.status(400).json({
-                success: false,
-                message: 'Validation failed',
-                errors: errorMap
-            });
-        }
-        next();
-    }
+    handleValidationErrors
 ];
 
 export const validateUpdateUser = [
     body('email')
         .optional()
-        .isEmail().withMessage('El formato del email es inválido'),
-    
-    body('password')
-        .optional()
-        .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
+        .isEmail().withMessage('errors.validation.email.invalid'),
     
     body('firstName')
         .optional()
         .trim()
-        .isLength({ min: 2 }).withMessage('El nombre debe tener al menos 2 caracteres'),
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
     
     body('lastName')
         .optional()
         .trim()
-        .isLength({ min: 2 }).withMessage('El apellido debe tener al menos 2 caracteres'),
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
     
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const errorMap = {};
-            errors.array().forEach(err => {
-                if (!errorMap[err.path]) {
-                    errorMap[err.path] = err.msg;
-                }
-            });
-            
-            return res.status(400).json({
-                success: false,
-                message: 'Validation failed',
-                errors: errorMap
-            });
-        }
-        next();
-    }
+    body('status')
+        .optional()
+        .isIn([0, 1]).withMessage('errors.validation.invalid'),
+    
+    handleValidationErrors
 ];
