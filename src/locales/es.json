@@ -35,7 +35,15 @@
             "system_tenant_modify": "No se puede modificar el tenant del sistema",
             "system_tenant_delete": "No se puede eliminar el tenant del sistema",
             "only_managers": "Solo los managers pueden realizar esta acción",
-            "admin_cannot_access_tenant": "Los administradores no pueden acceder a operaciones de tenant"
+            "admin_cannot_access_tenant": "Los administradores no pueden acceder a operaciones de tenant",
+            "different_tenant": "No puedes acceder a recursos de otro tenant"
+        },
+        "permission": {
+            "invalid_module": "Módulo inválido: {{module}}",
+            "invalid_action": "Acción inválida: {{action}}",
+            "only_user_role": "Solo se pueden asignar permisos a usuarios con rol 'user'",
+            "granted_not_boolean": "El campo 'granted' debe ser booleano",
+            "empty_array": "El array de permisos no puede estar vacío"
         }
     },
     "success": {
@@ -48,6 +56,9 @@
             "created": "Tenant creado exitosamente",
             "updated": "Tenant actualizado exitosamente",
             "deleted": "Tenant eliminado exitosamente"
+        },
+        "permission": {
+            "updated": "Permisos actualizados exitosamente"
         }
     }
 }

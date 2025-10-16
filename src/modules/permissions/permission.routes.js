@@ -17,8 +17,10 @@ const permissionController = new PermissionController(permissionService);
 router.use(jwtAuthMiddleware);
 router.use(tenantMiddleware);
 
-router.get('/:userId', (req, res) => permissionController.getUserPermissions(req, res));
 
-router.put('/:userId', managerMiddleware, (req, res) => permissionController.setUserPermissions(req, res));
+
+router.get('/:userId', permissionController.getUserPermissions.bind(permissionController));
+
+router.put('/:userId', managerMiddleware, permissionController.setUserPermissions.bind(permissionController));
 
 export default router;
