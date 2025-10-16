@@ -1,65 +1,35 @@
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
+import { handleValidationErrors } from '#middlewares/validation.middleware.js';
 
 export const validateCreateTenant = [
     body('name')
-        .notEmpty().withMessage('Nombre del tenant requerido')
+        .notEmpty().withMessage('errors.validation.required')
         .trim()
-        .isLength({ min: 2 }).withMessage('El nombre del tenant debe tener al menos 2 caracteres'),
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
     body('email')
-        .notEmpty().withMessage('Email requerido')
-        .isEmail().withMessage('Email inválido')
-        .normalizeEmail(),
-    body('firstName')
-        .notEmpty().withMessage('El nombre del manager es requerido')
-        .trim()
-        .isLength({ min: 2 }).withMessage('El nombre del manager debe tener al menos 2 caracteres'),
-    body('lastName')
-        .notEmpty().withMessage('El apellido del manager es requerido')
-        .trim()
-        .isLength({ min: 2 }).withMessage('El apellido del manager debe tener al menos 2 caracteres'),
+        .notEmpty().withMessage('errors.validation.required')
+        .isEmail().withMessage('errors.validation.invalid'),
     
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const errorMap = {};
-            errors.array().forEach(err => {
-                if (!errorMap[err.path]) {
-                    errorMap[err.path] = err.msg;
-                }
-            });
-            
-            return res.status(400).json({
-                success: false,
-                message: 'Validation failed',
-                errors: errorMap
-            });
-        }
-        next();
-    }
+    body('firstName')
+        .notEmpty().withMessage('errors.validation.required')
+        .trim()
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
+    
+    body('lastName')
+        .notEmpty().withMessage('errors.validation.required')
+        .trim()
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
+    
+    handleValidationErrors
 ];
 
+
 export const validateUpdateTenant = [
-    body('name')
+    body('firstName')
         .optional()
         .trim()
-        .isLength({ min: 2 }).withMessage('El nombre del tenant debe tener al menos 2 caracteres'),
+        .isLength({ min: 2 }).withMessage('errors.validation.min_length'),
     
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const errorMap = {};
-            errors.array().forEach(err => {
-                if (!errorMap[err.path]) {
-                    errorMap[err.path] = err.msg;
-                }
-            });
-            
-            return res.status(400).json({
-                success: false,
-                message: 'Validation failed',
-                errors: errorMap
-            });
-        }
-        next();
-    }
+    
+    handleValidationErrors
 ];

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
-import { db } from '../../config/db.js';
+import { db } from '#config/db.js';
+import { AppError } from '#utils/errorHandler.util.js';
 
 export class TenantService {
     constructor(tenantRepository, userRepository) {
@@ -8,41 +9,38 @@ export class TenantService {
     }
 
     async getAllTenants(filters = {}) {
-        try {
-            const tenants = await this.tenantRepository.findAll(filters);
-            return tenants;
-        } catch (error) {
-            throw new Error('Failed to fetch tenants');
+        const tenants = await this.tenantRepository.findAll(filters);
+
+        if (!tenants) {
+            throw new AppError(
+                'NOT_FOUND_ERROR', 
+                'errors.not_found.tenants'
+            );
         }
+        return tenants;
     }
 
     async getTenantById(tenantId) {
-        try {
-            const tenant = await this.tenantRepository.findById(tenantId);
-            
-            if (!tenant) {
-                throw new Error('Tenant not found');
-            }
-
-            return tenant;
-        } catch (error) {
-             throw error;
+        const tenant = await this.tenantRepository.findById(tenantId);
+        
+        if (!tenant) {
+            throw new AppError(
+                'NOT_FOUND_ERROR', 
+                'errors.not_found.tenant'
+            );
         }
+        return tenant;
     }
 
     async createTenantWithManager(data) {
-        if (!data.name) {
-            throw new Error('Tenant name is required');
-        }
-
-        if (!data.email || !data.firstName || !data.lastName) {
-            throw new Error('Manager email, firstName and lastName are required');
-        }
 
         const emailExists = await this.userRepository.emailExists(data.email);
         
         if (emailExists) {
-            throw new Error('Email already in use');
+            throw new AppError(
+                'CONFLICT_ERROR',
+                'errors.conflict.email_exists'
+            );
         }
 
         const connection = await db.getConnection();
@@ -80,22 +78,28 @@ export class TenantService {
     }
 
     async updateTenant(tenantId, tenantData) {
-        try {
-            const updatedTenant = await this.tenantRepository.update(tenantId, tenantData);
-            return updatedTenant;
-        } catch (error) {
-             throw error;
+        if (tenantId === 1) {
+            throw new AppError(
+                'FORBIDDEN_ERROR', 
+                'errors.forbidden.system_tenant_modify'
+            );
         }
+
+        const updatedTenant = await this.tenantRepository.update(tenantId, tenantData);
+        return updatedTenant;
     }
 
     async deleteTenant(tenantId) {
-        try {
-            await this.getTenantById(tenantId);
-
-            await this.tenantRepository.softDelete(tenantId);
-            return { message: 'Tenant deleted successfully' };
-        } catch (error) {
-             throw error;
+        if (tenantId === 1) {
+            throw new AppError(
+                'FORBIDDEN_ERROR', 
+                'errors.forbidden.system_tenant_delete'
+            );
         }
+
+        await this.getTenantById(tenantId);
+
+        await this.tenantRepository.softDelete(tenantId);
+        return { deleted: true };
     }
 }

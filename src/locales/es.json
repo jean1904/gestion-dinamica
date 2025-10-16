@@ -1,5 +1,6 @@
 {
     "fields": {
+        "name": "nombre",
         "email": "correo electrónico",
         "firstName": "nombre",
         "lastName": "apellido",
@@ -17,18 +18,24 @@
         },
         "authentication": {
             "unauthorized": "Autenticación requerida",
-            "only_managers": "Solo los managers pueden realizar esta acción",
-            "admin_cannot_access_tenant": "Los administradores no pueden acceder a operaciones de tenant",
-            "invalid_credentials": "Credenciales inválidas",
-            "cannot_delete_self": "No puedes eliminarte a ti mismo"
+            "invalid_credentials": "Credenciales inválidas"
         },
         "not_found": {
             "users": "No se encontraron usuarios",
             "user": "Usuario no encontrado",
-            "resource": "Recurso no encontrado"
+            "resource": "Recurso no encontrado",
+            "tenant": "Tenant no encontrado",
+            "tenants": "No se encontraron tenants"
         },
         "conflict": {
-            "email_exists": "El email ya está en uso"
+            "email_exists": "El correo electrónico ya está en uso"
+        },
+        "forbidden": {
+            "cannot_delete_self": "No puedes eliminarte a ti mismo",
+            "system_tenant_modify": "No se puede modificar el tenant del sistema",
+            "system_tenant_delete": "No se puede eliminar el tenant del sistema",
+            "only_managers": "Solo los managers pueden realizar esta acción",
+            "admin_cannot_access_tenant": "Los administradores no pueden acceder a operaciones de tenant"
         }
     },
     "success": {
@@ -36,6 +43,11 @@
             "created": "Usuario creado exitosamente",
             "updated": "Usuario actualizado exitosamente",
             "deleted": "Usuario eliminado exitosamente"
+        },
+        "tenant": {
+            "created": "Tenant creado exitosamente",
+            "updated": "Tenant actualizado exitosamente",
+            "deleted": "Tenant eliminado exitosamente"
         }
     }
 }

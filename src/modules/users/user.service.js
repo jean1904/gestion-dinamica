@@ -30,7 +30,7 @@ export class UserService {
 
         if (user.tenant_id !== requestingUserTenantId) {
             throw new AppError(
-                'AUTHENTICATION_ERROR', 
+                'NOT_FOUND_ERROR', 
                 'errors.not_found.user'
             );
         }
@@ -40,8 +40,8 @@ export class UserService {
     async createUser(userData, requestingUser) {
         if (requestingUser.role !== 'manager') {
             throw new AppError(
-                'AUTHENTICATION_ERROR', 
-                'errors.authentication.only_managers'
+                'FORBIDDEN_ERROR', 
+                'errors.forbidden.only_managers'
             );
         }
 
@@ -78,8 +78,8 @@ export class UserService {
         
         if (requestingUser.role !== 'manager') {
             throw new AppError(
-                'AUTHENTICATION_ERROR', 
-                'errors.authentication.only_managers'
+                'FORBIDDEN_ERROR', 
+                'errors.forbidden.only_managers'
             );
         }
 
@@ -103,15 +103,15 @@ export class UserService {
 
         if (requestingUser.role !== 'manager') {
             throw new AppError(
-                'AUTHENTICATION_ERROR', 
-                'errors.authentication.only_managers'
+                'FORBIDDEN_ERROR', 
+                'errors.forbidden.only_managers'
             );
         }
 
         if (requestingUser.id === userId) {
             throw new AppError(
                 'VALIDATION_ERROR', 
-                'errors.authentication.cannot_delete_self'
+                'errors.forbidden.cannot_delete_self'
             );
         }
 

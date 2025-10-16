@@ -5,7 +5,7 @@ export class TenantController {
         this.tenantService = tenantService;
     }
 
-    async getAllTenants(req, res) {
+    async getAllTenants(req, res, next) {
         try {
             const { status } = req.query;
 
@@ -21,14 +21,11 @@ export class TenantController {
                 total: tenants.length
             });
         } catch (error) {
-            res.status(500).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async getTenantById(req, res) {
+    async getTenantById(req, res, next) {
         try {
             const { id } = req.params;
 
@@ -40,34 +37,28 @@ export class TenantController {
                 data: formattedTenant
             });
         } catch (error) {
-            const statusCode = error.message === 'Tenants not found' ? 404 : 403;
-            res.status(statusCode).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async createTenantWithManager(req, res) {
+    async createTenantWithManager(req, res, next) {
         try {
             const data = req.body;
 
-            await this.tenantService.createTenantWithManager(data);
+            const newTenant = await this.tenantService.createTenantWithManager(data);
+            const formattedTenant = TenantResource.transform(newTenant);
 
             res.status(201).json({
                 success: true,
-                message: 'Tenant created successfully'
+                data: formattedTenant,
+                message: req.t('success.tenant.created')
             });
         } catch (error) {
-            const statusCode = error.message.includes('already in use') ? 409 : 400;
-            res.status(statusCode).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async updateTenant(req, res) {
+    async updateTenant(req, res, next) {
         try {
             const { id } = req.params;
             const tenantData = req.body;
@@ -82,17 +73,14 @@ export class TenantController {
             res.json({
                 success: true,
                 data: formattedTenant,
-                message: 'Tenant updated successfully'
+                message: req.t('success.tenant.updated')
             });
         } catch (error) {
-            res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 
-    async deleteTenant(req, res) {
+    async deleteTenant(req, res, next) {
         try {
             const { id } = req.params;
             const requestingUser = req.user;
@@ -101,13 +89,10 @@ export class TenantController {
 
             res.json({
                 success: true,
-                message: 'User deleted successfully'
+                message: req.t('success.tenant.deleted')
             });
         } catch (error) {
-            res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            next(error);
         }
     }
 }

@@ -11,7 +11,7 @@ export function tenantMiddleware(req, res, next) {
     if (req.user.role === 'admin') {
         return next(new AppError(
             'FORBIDDEN_ERROR',
-            'errors.authentication.admin_cannot_access_tenant',
+            'errors.forbidden.admin_cannot_access_tenant',
             403
         ));
     }
@@ -31,7 +31,7 @@ export function managerMiddleware(req, res, next) {
     if (req.user.role !== 'manager') {
         return next(new AppError(
             'FORBIDDEN_ERROR',
-            'errors.authentication.only_managers',
+            'errors.forbidden.only_managers',
             403
         ));
     }

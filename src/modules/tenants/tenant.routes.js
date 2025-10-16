@@ -1,6 +1,6 @@
 import express from 'express';
-import { jwtAuthMiddleware } from '../../middlewares/jwtAuth.middleware.js';
-import { adminMiddleware } from '../../middlewares/admin.middleware.js';
+import { jwtAuthMiddleware } from '#middlewares/jwtAuth.middleware.js';
+import { adminMiddleware } from '#middlewares/admin.middleware.js';
 import { TenantRepository } from './tenant.repository.js';
 import { TenantService } from './tenant.service.js';
 import { TenantController } from './tenant.controller.js';
@@ -19,14 +19,15 @@ const tenantController = new TenantController(tenantService);
 router.use(jwtAuthMiddleware);
 router.use(adminMiddleware);
 
-router.get('/', (req, res) => tenantController.getAllTenants(req, res));
 
-router.get('/:id', (req, res) => tenantController.getTenantById(req, res));
+router.get('/', tenantController.getAllTenants.bind(tenantController));
 
-router.post('/', validateCreateTenant, (req, res) => tenantController.createTenantWithManager(req, res));
+router.get('/:id', tenantController.getTenantById.bind(tenantController));
 
-router.put('/:id', validateUpdateTenant, (req, res) => tenantController.updateTenant(req, res));
+router.post('/', validateCreateTenant, tenantController.createTenantWithManager.bind(tenantController));
 
-router.delete('/:id', (req, res) => tenantController.deleteTenant(req, res));
+router.put('/:id', validateUpdateTenant, tenantController.updateTenant.bind(tenantController));
+
+router.delete('/:id', tenantController.deleteTenant.bind(tenantController));
 
 export default router;
