@@ -1,4 +1,4 @@
-import { db } from '../../config/db.js';
+import { db } from '#config/db.js';
 
 export class PermissionRepository {
     async findByUserId(userId) {
@@ -80,5 +80,32 @@ export class PermissionRepository {
         } finally {
             connection.release();
         }
+    }
+
+    async checkUserPermission(userId, tenantId, module, action) {
+        const [rows] = await this.db.query(
+            `SELECT id 
+             FROM permissions 
+             WHERE user_id = ? 
+               AND tenant_id = ?
+               AND module = ? 
+               AND action = ? 
+               AND granted = true
+             LIMIT 1`,
+            [userId, tenantId, module, action]
+        );
+
+        return rows.length > 0;
+    }
+
+    async getUserPermissions(userId, tenantId) {
+        const [rows] = await this.db.query(
+            `SELECT module, action, granted 
+             FROM permissions 
+             WHERE user_id = ? AND tenant_id = ?`,
+            [userId, tenantId]
+        );
+
+        return rows;
     }
 }

@@ -1,0 +1,69 @@
+{
+    "fields": {
+        "name": "name",
+        "email": "email",
+        "firstName": "first name",
+        "lastName": "last name",
+        "status": "status",
+        "password": "password"
+    },
+    "errors": {
+        "server": {
+            "internal": "Something went wrong on the server"
+        },
+        "auth": {
+            "invalid_credentials": "Invalid email or password"
+        },
+        "validation": {
+            "failed": "Validation errors",
+            "required": "The field {{field}} is required",
+            "invalid": "The field {{field}} is invalid",
+            "min_length": "The field {{field}} is too short"
+        },
+        "authentication": {
+            "unauthorized": "Authentication required",
+            "invalid_credentials": "Invalid credentials"
+        },
+        "not_found": {
+            "users": "No users found",
+            "user": "User not found",
+            "resource": "Resource not found",
+            "tenant": "Tenant not found",
+            "tenants": "No tenants found"
+        },
+        "conflict": {
+            "email_exists": "The email is already in use"
+        },
+        "forbidden": {
+            "cannot_delete_self": "You cannot delete yourself",
+            "system_tenant_modify": "Cannot modify system tenant",
+            "system_tenant_delete": "Cannot delete system tenant",
+            "only_managers": "Only managers can perform this action",
+            "admin_cannot_access_tenant": "Admins cannot access tenant operations",
+            "different_tenant": "You cannot access resources from another tenant"
+        },
+        "permission": {
+            "invalid_module": "Invalid module: {{module}}",
+            "invalid_action": "Invalid action: {{action}}",
+            "only_user_role": "Permissions can only be assigned to users with the 'user' role",
+            "granted_not_boolean": "The 'granted' field must be boolean",
+            "empty_array": "The permissions array cannot be empty",
+            "access_denied": "You don't have permission to {{action}} in {{module}}"
+        }
+    },
+    "success": {
+        "user": {
+            "created": "User successfully created",
+            "updated": "User successfully updated",
+            "deleted": "User successfully deleted"
+        },
+        "tenant": {
+            "created": "Tenant successfully created",
+            "updated": "Tenant successfully updated",
+            "deleted": "Tenant successfully deleted"
+        },
+        "permission": {
+            "updated": "Permissions successfully updated"
+        }
+    }
+}

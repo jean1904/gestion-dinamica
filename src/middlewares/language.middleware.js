@@ -1,4 +1,4 @@
-import i18n from '../config/i18n.js';
+import i18n from '#config/i18n.js';
 
 export const languageMiddleware = (req, res, next) => {
     let locale = req.query.lang || 
@@ -6,7 +6,7 @@ export const languageMiddleware = (req, res, next) => {
                  req.user?.language ||
                  'es';
 
-    const supportedLocales = ['en', 'es', 'pt'];
+    const supportedLocales = ['en', 'es'];
     if (!supportedLocales.includes(locale)) {
         locale = 'es';
     }

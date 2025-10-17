@@ -1,41 +1,43 @@
-import { db } from '../config/db.js';
+import { AppError } from '#utils/AppError.js';
+import { PermissionRepository } from '#modules/permissions/permission.repository.js';
+
+const permissionRepository = new PermissionRepository();
 
 export function checkPermission(module, action) {
     return async (req, res, next) => {
-        const user = req.user;
-
-        if (user.role === 'manager') {
-            return next();
-        }
-
-        if (user.role === 'admin') {
-            return res.status(403).json({
-                success: false,
-                message: 'Access denied'
-            });
-        }
-
         try {
-            const [rows] = await db.query(
-                `SELECT * FROM permissions 
-                WHERE user_id = ? AND module = ? AND action = ? AND granted = true`,
-                [user.id, module, action]
+            const user = req.user;
+
+            if (user.role === 'manager') {
+                return next();
+            }
+
+            if (user.role === 'admin') {
+                throw new AppError(
+                    'FORBIDDEN_ERROR',
+                    'errors.forbidden.admin_no_permission',
+                );
+            }
+
+            const hasPermission = await permissionRepository.checkUserPermission(
+                user.id,
+                user.tenantId,
+                module,
+                action
             );
 
-            if (rows.length === 0) {
-                return res.status(403).json({
-                success: false,
-                message: `You don't have permission to ${action} ${module}`
-                });
+            if (!hasPermission) {
+                throw new AppError(
+                    'FORBIDDEN_ERROR',
+                    'errors.permission.access_denied',
+                    null,
+                    { module, action }
+                );
             }
 
             next();
         } catch (error) {
-           
-            res.status(500).json({ 
-                success: false, 
-                message: 'Permission check failed' 
-            });
+            next(error); 
         }
     };
 }

@@ -5,7 +5,7 @@ import { TenantRepository } from './tenant.repository.js';
 import { TenantService } from './tenant.service.js';
 import { TenantController } from './tenant.controller.js';
 import { validateCreateTenant, validateUpdateTenant } from './tenant.validators.js';
-import { UserRepository } from '../users/user.repository.js'; 
+import { UserRepository } from '#modules/users/user.repository.js'; 
 
 const router = express.Router();
 
@@ -29,5 +29,25 @@ router.post('/', validateCreateTenant, tenantController.createTenantWithManager.
 router.put('/:id', validateUpdateTenant, tenantController.updateTenant.bind(tenantController));
 
 router.delete('/:id', tenantController.deleteTenant.bind(tenantController));
+
+/*
+// Example of routes with permission checks
+import { checkPermission, checkAnyPermission } from '#middlewares/permission.middleware.js';
+router.get(
+    '/',
+    checkAnyPermission([
+        { module: 'sales', action: 'read' },
+        { module: 'inventory', action: 'read' }
+    ]),
+    tenantController.getAllSales.bind(tenantController)
+);
+
+// Route to create a sale, requiring 'create' permission in 'sales' module
+router.post(
+    '/',
+    checkPermission('sales', 'create'),
+    tenantController.createSale.bind(tenantController)
+);
+*/
 
 export default router;

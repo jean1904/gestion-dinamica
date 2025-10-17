@@ -9,7 +9,10 @@ import {
   searchByNameHandler,
 } from '../controllers/item.controller.js';
 
+import { jwtAuthMiddleware } from '#middlewares/jwtAuth.middleware.js';
+
 const router = Router();
+router.use(jwtAuthMiddleware);
 
 // Obtener todos los items
 router.get('/', listItems);

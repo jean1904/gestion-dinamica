@@ -1,8 +1,8 @@
 import express from 'express';
-import { jwtAuthMiddleware } from '../../middlewares/jwtAuth.middleware.js';
-import { tenantMiddleware, managerMiddleware } from '../../middlewares/tenant.middleware.js';
+import { jwtAuthMiddleware } from '#middlewares/jwtAuth.middleware.js';
+import { tenantMiddleware, managerMiddleware } from '#middlewares/tenant.middleware.js';
 import { PermissionRepository } from './permission.repository.js';
-import { UserRepository } from '../users/user.repository.js';
+import { UserRepository } from '#modules/users/user.repository.js';
 import { PermissionService } from './permission.service.js';
 import { PermissionController } from './permission.controller.js';
 
@@ -16,8 +16,6 @@ const permissionController = new PermissionController(permissionService);
 
 router.use(jwtAuthMiddleware);
 router.use(tenantMiddleware);
-
-
 
 router.get('/:userId', permissionController.getUserPermissions.bind(permissionController));
 

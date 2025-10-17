@@ -4,11 +4,15 @@
         "email": "correo electrónico",
         "firstName": "nombre",
         "lastName": "apellido",
-        "status": "estado"
+        "status": "estado",
+        "password": "contraseña"
     },
     "errors": {
         "server": {
             "internal": "Algo salió mal en el servidor"
+        },
+        "auth": {
+            "invalid_credentials": "Correo electrónico o contraseña inválidos"
         },
         "validation": {
             "failed": "Errores de validación",
@@ -43,7 +47,8 @@
             "invalid_action": "Acción inválida: {{action}}",
             "only_user_role": "Solo se pueden asignar permisos a usuarios con rol 'user'",
             "granted_not_boolean": "El campo 'granted' debe ser booleano",
-            "empty_array": "El array de permisos no puede estar vacío"
+            "empty_array": "El array de permisos no puede estar vacío",
+            "access_denied": "No tienes permiso para {{action}} en {{module}}"
         }
     },
     "success": {
