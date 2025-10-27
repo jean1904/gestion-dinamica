@@ -37,7 +37,9 @@ export class PermissionController {
             res.json({
                 success: true,
                 data: updatedPermissions,
-                message: req.t('success.permission.updated')
+                message: req.t('templates.updated', {
+                    entity: req.t('entities.permission.plural') 
+                })
             });
         } catch (error) {
             next(error);

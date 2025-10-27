@@ -15,6 +15,8 @@ import authRoutes from '#modules/auth/auth.routes.js';
 import userRoutes from '#modules/users/user.routes.js';
 import permissionRoutes from '#modules/permissions/permission.routes.js';
 
+import currencyRateRoutes from '#modules/currencyRate/currencyRate.routes.js';
+
 import tenantRoutes from '#modules/tenants/tenant.routes.js';
 
 const app = express();
@@ -29,6 +31,7 @@ app.use('/api/settlement', settlementRoutes);
 
 app.use('/api/users', userRoutes);
 app.use('/api/permissions', permissionRoutes);
+app.use('/api/currency-rates', currencyRateRoutes);
 
 app.use('/api/admin/tenants', tenantRoutes);
 

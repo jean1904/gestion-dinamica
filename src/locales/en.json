@@ -16,28 +16,29 @@
         },
         "validation": {
             "failed": "Validation errors",
-            "required": "The field {{field}} is required",
-            "invalid": "The field {{field}} is invalid",
-            "min_length": "The field {{field}} is too short"
+            "required": "The {{field}} field is required",
+            "invalid": "The {{field}} field is invalid",
+            "min_length": "The {{field}} field is too short",
+            "rates_required": "You must send at least one exchange rate",
+            "duplicate_currency": "You cannot send the same currency more than once",
+            "invalid_rate_value": "The rate value must be greater than 0"
         },
         "authentication": {
             "unauthorized": "Authentication required",
             "invalid_credentials": "Invalid credentials"
         },
         "not_found": {
-            "users": "No users found",
-            "user": "User not found",
-            "resource": "Resource not found",
-            "tenant": "Tenant not found",
-            "tenants": "No tenants found"
+            "generic": "No {{entity}} found",
+            "singular": "{{entity}} not found",
+            "resource": "Resource not found"
         },
         "conflict": {
             "email_exists": "The email is already in use"
         },
         "forbidden": {
             "cannot_delete_self": "You cannot delete yourself",
-            "system_tenant_modify": "Cannot modify system tenant",
-            "system_tenant_delete": "Cannot delete system tenant",
+            "system_tenant_modify": "The system tenant cannot be modified",
+            "system_tenant_delete": "The system tenant cannot be deleted",
             "only_managers": "Only managers can perform this action",
             "admin_cannot_access_tenant": "Admins cannot access tenant operations",
             "different_tenant": "You cannot access resources from another tenant"
@@ -48,22 +49,32 @@
             "only_user_role": "Permissions can only be assigned to users with the 'user' role",
             "granted_not_boolean": "The 'granted' field must be boolean",
             "empty_array": "The permissions array cannot be empty",
-            "access_denied": "You don't have permission to {{action}} in {{module}}"
+            "access_denied": "You do not have permission to {{action}} in {{module}}"
         }
     },
-    "success": {
+    "templates": {
+        "created": "{{entity}} created successfully",
+        "updated": "{{entity}} updated successfully",
+        "deleted": "{{entity}} deleted successfully",
+        "not_found": "{{entity}} not found",
+        "no_entities": "No {{entityPlural}} found"
+    },
+    "entities": {
         "user": {
-            "created": "User successfully created",
-            "updated": "User successfully updated",
-            "deleted": "User successfully deleted"
+            "singular": "User",
+            "plural": "Users"
         },
         "tenant": {
-            "created": "Tenant successfully created",
-            "updated": "Tenant successfully updated",
-            "deleted": "Tenant successfully deleted"
+            "singular": "Tenant",
+            "plural": "Tenants"
+        },
+        "exchangeRate": {
+            "singular": "Exchange rate",
+            "plural": "Exchange rates"
         },
         "permission": {
-            "updated": "Permissions successfully updated"
+            "singular": "Permission",
+            "plural": "Permissions"
         }
     }
 }

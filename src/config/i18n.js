@@ -18,4 +18,6 @@ i18n.configure({
     }
 });
 
+export const t = (key, params) => i18n.__(key, params);
+
 export default i18n;

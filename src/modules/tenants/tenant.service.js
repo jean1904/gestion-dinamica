@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { db } from '#config/db.js';
 import { AppError } from '#utils/errorHandler.util.js';
+import { t } from '#config/i18n.js';
 
 export class TenantService {
     constructor(tenantRepository, userRepository) {
@@ -14,7 +15,7 @@ export class TenantService {
         if (!tenants) {
             throw new AppError(
                 'NOT_FOUND_ERROR', 
-                'errors.not_found.tenants'
+                t('templates.no_entities', { entityPlural: t('entities.tenant.plural').toLowerCase() })
             );
         }
         return tenants;
@@ -26,7 +27,7 @@ export class TenantService {
         if (!tenant) {
             throw new AppError(
                 'NOT_FOUND_ERROR', 
-                'errors.not_found.tenant'
+                t('templates.not_found', { entity: t('entities.tenant.singular') })
             );
         }
         return tenant;

@@ -55,7 +55,9 @@ export class UserController {
             res.status(201).json({
                 success: true,
                 data: formattedUser,
-                message: req.t('success.user.created')
+                message: req.t('templates.created', {
+                    entity: req.t('entities.user.singular') 
+                })
             });
         } catch (error) {
             next(error);
@@ -79,7 +81,9 @@ export class UserController {
             res.json({
                 success: true,
                 data: formattedUser,
-                message: req.t('success.user.updated')
+                message: req.t('templates.updated', {
+                    entity: req.t('entities.user.singular') 
+                })
             });
         } catch (error) {
             next(error);
@@ -95,7 +99,9 @@ export class UserController {
 
             res.json({
                 success: true,
-                message: req.t('success.user.deleted')
+                message: req.t('templates.deleted', {
+                    entity: req.t('entities.user.singular') 
+                })
             });
         } catch (error) {
             next(error);

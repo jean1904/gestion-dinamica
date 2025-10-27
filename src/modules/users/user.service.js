@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { AppError } from '#utils/errorHandler.util.js';
+import { t } from '#config/i18n.js';
 
 export class UserService {
     constructor(userRepository) {
@@ -12,7 +13,7 @@ export class UserService {
         if (!users) {
             throw new AppError(
                 'NOT_FOUND_ERROR', 
-                'errors.not_found.users'
+                t('templates.no_entities', { entityPlural: t('entities.user.plural').toLowerCase() })
             );
         }
         return users;
@@ -24,14 +25,14 @@ export class UserService {
         if (!user) {
             throw new AppError(
                 'NOT_FOUND_ERROR', 
-                'errors.not_found.user'
+                t('templates.not_found', { entity: t('entities.user.singular') })
             );
         }
 
         if (user.tenant_id !== requestingUserTenantId) {
             throw new AppError(
                 'NOT_FOUND_ERROR', 
-                'errors.not_found.user'
+                t('templates.not_found', { entity: t('entities.user.singular') })
             );
         }
         return user;

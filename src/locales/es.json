@@ -18,18 +18,19 @@
             "failed": "Errores de validación",
             "required": "El campo {{field}} es requerido",
             "invalid": "El campo {{field}} es inválido",
-            "min_length": "El campo {{field}} es demasiado corto"
+            "min_length": "El campo {{field}} es demasiado corto",
+            "rates_required": "Debe enviar al menos una tasa de cambio",
+            "duplicate_currency": "No puede enviar la misma moneda más de una vez",
+            "invalid_rate_value": "El valor de la tasa debe ser mayor a 0"
         },
         "authentication": {
             "unauthorized": "Autenticación requerida",
             "invalid_credentials": "Credenciales inválidas"
         },
         "not_found": {
-            "users": "No se encontraron usuarios",
-            "user": "Usuario no encontrado",
-            "resource": "Recurso no encontrado",
-            "tenant": "Tenant no encontrado",
-            "tenants": "No se encontraron tenants"
+            "generic": "No se encontraron {{entity}}",
+            "singular": "{{entity}} no encontrado",
+            "resource": "Recurso no encontrado"
         },
         "conflict": {
             "email_exists": "El correo electrónico ya está en uso"
@@ -51,19 +52,29 @@
             "access_denied": "No tienes permiso para {{action}} en {{module}}"
         }
     },
-    "success": {
+    "templates": {
+        "created": "{{entity}} creado exitosamente",
+        "updated": "{{entity}} actualizado exitosamente",
+        "deleted": "{{entity}} eliminado exitosamente",
+        "not_found": "{{entity}} no encontrado",
+        "no_entities": "No se encontraron {{entityPlural}}"
+    },
+    "entities": {
         "user": {
-            "created": "Usuario creado exitosamente",
-            "updated": "Usuario actualizado exitosamente",
-            "deleted": "Usuario eliminado exitosamente"
+            "singular": "Usuario",
+            "plural": "Usuarios"
         },
         "tenant": {
-            "created": "Tenant creado exitosamente",
-            "updated": "Tenant actualizado exitosamente",
-            "deleted": "Tenant eliminado exitosamente"
+            "singular": "Tenant",
+            "plural": "Tenants"
         },
-        "permission": {
-            "updated": "Permisos actualizados exitosamente"
+        "exchangeRate": {
+            "singular": "Tipo de cambio",
+            "plural": "Tipos de cambio"
+        },
+        "permission":{
+            "singular": "Permiso",
+            "plural": "Permisos"
         }
     }
 }

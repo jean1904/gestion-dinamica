@@ -51,7 +51,9 @@ export class TenantController {
             res.status(201).json({
                 success: true,
                 data: formattedTenant,
-                message: req.t('success.tenant.created')
+                message: req.t('templates.created', {
+                    entity: req.t('entities.tenant.singular') 
+                })
             });
         } catch (error) {
             next(error);
@@ -73,7 +75,9 @@ export class TenantController {
             res.json({
                 success: true,
                 data: formattedTenant,
-                message: req.t('success.tenant.updated')
+                message: req.t('templates.updated', {
+                    entity: req.t('entities.tenant.singular') 
+                })
             });
         } catch (error) {
             next(error);
@@ -89,7 +93,9 @@ export class TenantController {
 
             res.json({
                 success: true,
-                message: req.t('success.tenant.deleted')
+                message: req.t('templates.deleted', {
+                    entity: req.t('entities.tenant.singular') 
+                })
             });
         } catch (error) {
             next(error);
