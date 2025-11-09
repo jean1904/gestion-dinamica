@@ -21,7 +21,9 @@
             "min_length": "The {{field}} field is too short",
             "rates_required": "You must send at least one exchange rate",
             "duplicate_currency": "You cannot send the same currency more than once",
-            "invalid_rate_value": "The rate value must be greater than 0"
+            "invalid_rate_value": "The rate value must be greater than 0",
+            "invalid_currency": "Invalid base currency for price calculation",
+            "invalid_price_data": "The price data sent is incorrect. Verify that all fields are valid."
         },
         "authentication": {
             "unauthorized": "Authentication required",
@@ -50,6 +52,10 @@
             "granted_not_boolean": "The 'granted' field must be boolean",
             "empty_array": "The permissions array cannot be empty",
             "access_denied": "You do not have permission to {{action}} in {{module}}"
+        },
+        "exchangeRate": {
+            "no_rates_today": "No exchange rates configured for today",
+            "missing_today_rates": "Exchange rates for today are missing"
         }
     },
     "templates": {
@@ -75,6 +81,14 @@
         "permission": {
             "singular": "Permission",
             "plural": "Permissions"
+        },
+        "item": {
+            "singular": "Item",
+            "plural": "Items"
+        },
+        "price": {
+            "singular": "Price",
+            "plural": "Prices"
         }
     }
 }

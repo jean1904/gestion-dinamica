@@ -21,7 +21,9 @@
             "min_length": "El campo {{field}} es demasiado corto",
             "rates_required": "Debe enviar al menos una tasa de cambio",
             "duplicate_currency": "No puede enviar la misma moneda más de una vez",
-            "invalid_rate_value": "El valor de la tasa debe ser mayor a 0"
+            "invalid_rate_value": "El valor de la tasa debe ser mayor a 0",
+            "invalid_currency": "Moneda base inválida para el cálculo de precios",
+            "invalid_price_data": "Los datos de precios enviados no son correctos. Verifica que todos los campos sean válidos."
         },
         "authentication": {
             "unauthorized": "Autenticación requerida",
@@ -50,6 +52,10 @@
             "granted_not_boolean": "El campo 'granted' debe ser booleano",
             "empty_array": "El array de permisos no puede estar vacío",
             "access_denied": "No tienes permiso para {{action}} en {{module}}"
+        },
+        "exchangeRate": {
+            "no_rates_today": "No hay tasas de cambio configuradas para el día de hoy",
+            "missing_today_rates": "Faltan tasas de cambio para el día de hoy"
         }
     },
     "templates": {
@@ -75,6 +81,14 @@
         "permission":{
             "singular": "Permiso",
             "plural": "Permisos"
+        },
+        "item": {
+            "singular": "Item",
+            "plural": "Items"
+        },
+        "price": {
+            "singular": "Precio",
+            "plural": "Precios"
         }
     }
 }

@@ -1,4 +1,4 @@
-import { AppError } from '#utils/AppError.js';
+import { AppError } from '#utils/errorHandler.util.js'; 
 import { PermissionRepository } from '#modules/permissions/permission.repository.js';
 
 const permissionRepository = new PermissionRepository();
