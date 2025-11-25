@@ -5,7 +5,16 @@
         "firstName": "first name",
         "lastName": "last name",
         "status": "status",
-        "password": "password"
+        "password": "password",
+        "warehouse": "warehouse",
+        "warehouseId": "warehouse",
+        "cost": "cost",
+        "details": "details",
+        "item": "item",
+        "itemId": "item",
+        "quantity": "quantity",
+        "unitPrice": "unit price",
+        "currencyId": "currency"
     },
     "errors": {
         "server": {
@@ -23,7 +32,9 @@
             "duplicate_currency": "You cannot send the same currency more than once",
             "invalid_rate_value": "The rate value must be greater than 0",
             "invalid_currency": "Invalid base currency for price calculation",
-            "invalid_price_data": "The price data sent is incorrect. Verify that all fields are valid."
+            "invalid_price_data": "The price data sent is incorrect. Check that all fields are valid.",
+            "insufficient_stock": "Insufficient stock to perform the operation",
+            "invalid_quantity": "Quantity must be greater than 0"
         },
         "authentication": {
             "unauthorized": "Authentication required",
@@ -89,6 +100,18 @@
         "price": {
             "singular": "Price",
             "plural": "Prices"
+        },
+        "batchEntry": {
+            "singular": "Batch entry",
+            "plural": "Batch entries"
+        },
+        "warehouse": {
+            "singular": "Warehouse",
+            "plural": "Warehouses"
+        },
+        "inventory": {
+            "singular": "Inventory",
+            "plural": "Inventories"
         }
     }
 }

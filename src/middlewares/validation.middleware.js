@@ -8,7 +8,7 @@ export const handleValidationErrors = (req, res, next) => {
         errors.array().forEach(err => {
             if (!errorMap[err.path]) {
                 errorMap[err.path] = req.t(err.msg, { 
-                    field: req.t(`fields.${err.path}`)
+                    field: req.t(getFieldTranslationKey(err.path))
                 });
             }
         });
@@ -23,3 +23,16 @@ export const handleValidationErrors = (req, res, next) => {
     
     next();
 };
+
+function getFieldTranslationKey(path) {
+    // Si es un campo de array como 'details[0].currencyId'
+    const arrayMatch = path.match(/^(\w+)\[\d+\]\.(\w+)$/);
+    if (arrayMatch) {
+        const [, arrayName, fieldName] = arrayMatch;
+        // Retorna 'fields.currencyId' en lugar de 'fields.details[0].currencyId'
+        return `fields.${fieldName}`;
+    }
+    
+    // Para campos normales
+    return `fields.${path}`;
+}

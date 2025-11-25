@@ -11,15 +11,13 @@ import { errorHandler } from '#middlewares/errorHandler.middleware.js';
 import { languageMiddleware } from '#middlewares/language.middleware.js';
 
 import authRoutes from '#modules/auth/auth.routes.js';
-
 import userRoutes from '#modules/users/user.routes.js';
 import permissionRoutes from '#modules/permissions/permission.routes.js';
-
 import priceRoutes from '#modules/prices/price.routes.js'
-
 import currencyRateRoutes from '#modules/currencyRate/currencyRate.routes.js';
-
 import tenantRoutes from '#modules/tenants/tenant.routes.js';
+import batchEntryRoutes from '#modules/batchEntry/batchEntry.routes.js';
+import warehouseRoutes from '#modules/warehouse/warehouse.routes.js';
 
 const app = express();
 app.use(cors());
@@ -37,7 +35,13 @@ app.use('/api/currency-rates', currencyRateRoutes);
 
 app.use('/api/prices', priceRoutes);
 
+app.use('/api/batch-entries', batchEntryRoutes);
+
+app.use('/api/warehouses', warehouseRoutes);
+
+
 app.use('/api/admin/tenants', tenantRoutes);
+
 
 /*app.use('/api/suppliers', supplierRoutes);
 app.use('/api/prices', priceRoutes);*/

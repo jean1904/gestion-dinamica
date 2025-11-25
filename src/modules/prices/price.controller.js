@@ -1,5 +1,6 @@
 import { AppError } from '#utils/errorHandler.util.js';
 import { t } from '#config/i18n.js';
+import { CURRENCY_CODES } from '#constants/currencies.constant.js';
 
 export class PriceController {
     constructor(priceService, priceCalculationService, currencyRateService) {
@@ -29,8 +30,9 @@ export class PriceController {
                 );
             }
 
-            const rateUsd = ratesResult.find(rate => rate.code === 'USD');
-            const rateCash = ratesResult.find(rate => rate.code === 'USD_CASH');
+            const rateUsd = ratesResult.find(rate => rate.code === CURRENCY_CODES.USD);
+            const rateCash = ratesResult.find(rate => rate.code === CURRENCY_CODES.USD_CASH);
+            
 
             if (!rateUsd || !rateCash) {
                 throw new AppError(

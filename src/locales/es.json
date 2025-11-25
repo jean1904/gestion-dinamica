@@ -5,7 +5,16 @@
         "firstName": "nombre",
         "lastName": "apellido",
         "status": "estado",
-        "password": "contraseña"
+        "password": "contraseña",
+        "warehouse": "almacén",
+        "warehouseId": "almacén",
+        "cost": "costo",
+        "details": "detalles",
+        "item": "artículo",
+        "itemId": "artículo",
+        "quantity": "cantidad",
+        "unitPrice": "precio unitario",
+        "currencyId": "moneda"
     },
     "errors": {
         "server": {
@@ -23,7 +32,9 @@
             "duplicate_currency": "No puede enviar la misma moneda más de una vez",
             "invalid_rate_value": "El valor de la tasa debe ser mayor a 0",
             "invalid_currency": "Moneda base inválida para el cálculo de precios",
-            "invalid_price_data": "Los datos de precios enviados no son correctos. Verifica que todos los campos sean válidos."
+            "invalid_price_data": "Los datos de precios enviados no son correctos. Verifica que todos los campos sean válidos.",
+            "insufficient_stock": "Stock insuficiente para realizar la operación",
+            "invalid_quantity": "La cantidad debe ser mayor a 0"
         },
         "authentication": {
             "unauthorized": "Autenticación requerida",
@@ -89,6 +100,18 @@
         "price": {
             "singular": "Precio",
             "plural": "Precios"
+        },
+        "batchEntry": {
+            "singular": "Entrada por lote",
+            "plural": "Entradas por lote"
+        },
+        "warehouse": {
+            "singular": "Almacén",
+            "plural": "Almacenes"
+        },
+        "inventory": {
+            "singular": "Inventario",
+            "plural": "Inventarios"
         }
     }
 }

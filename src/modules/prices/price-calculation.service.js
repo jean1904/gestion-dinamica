@@ -1,4 +1,5 @@
 import { AppError } from '#utils/errorHandler.util.js';
+import { normalizePrice } from '#utils/normalizePrice.util.js';
 
 export class PriceCalculationService {
     constructor(priceQueryRepository) {
@@ -72,21 +73,15 @@ export class PriceCalculationService {
     }
 
     _calculateItemPrices(item, rateUsd, rateCash, usdCurrencyId, cashCurrencyId) {
-        let priceUsd, priceVes, priceCash;
+        // 1. Determinar cuál monto usar según la moneda base
+        let baseAmount;
 
-        // Caso 1: El precio base está en USD
         if (item.base_currency_id === usdCurrencyId) {
-            priceUsd = parseFloat(item.price_usd);
-            priceVes = priceUsd * rateUsd;
-            priceCash = priceVes / rateCash;
-        }
-        // Caso 2: El precio base está en USD_CASH
+            baseAmount = item.price_usd;
+        } 
         else if (item.base_currency_id === cashCurrencyId) {
-            priceCash = parseFloat(item.price_cash);
-            priceVes = priceCash * rateCash;
-            priceUsd = priceVes / rateUsd;
-        }
-        // Caso por defecto: si tiene base_currency_id pero no es válido
+            baseAmount = item.price_cash;
+        } 
         else {
             throw new AppError(
                 'VALIDATION_ERROR',
@@ -94,15 +89,25 @@ export class PriceCalculationService {
             );
         }
 
+        // 2. Normalizar usando el helper global
+        const prices = normalizePrice(baseAmount, item.base_currency_id, {
+            usdCurrencyId,
+            cashCurrencyId,
+            rateUsd,
+            rateCash
+        });
+
+        // 3. Devolver exactamente la misma estructura que antes
         return {
             id: item.price_id,
             item_id: item.item_id,
             item_name: item.item_name,
             item_barcode: item.barcode,
             base_currency_id: item.base_currency_id,
-            price_usd: this._roundPrice(priceUsd),
-            price_ves: this._roundPrice(priceVes),
-            price_cash: this._roundPrice(priceCash)
+
+            price_usd: prices.usd,
+            price_ves: prices.ves,
+            price_cash: prices.cash
         };
     }
 
