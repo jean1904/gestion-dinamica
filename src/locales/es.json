@@ -34,7 +34,9 @@
             "invalid_currency": "Moneda base inválida para el cálculo de precios",
             "invalid_price_data": "Los datos de precios enviados no son correctos. Verifica que todos los campos sean válidos.",
             "insufficient_stock": "Stock insuficiente para realizar la operación",
-            "invalid_quantity": "La cantidad debe ser mayor a 0"
+            "invalid_quantity": "La cantidad debe ser mayor a 0",
+            "invalid_amount": "El monto debe ser un número positivo",
+            "invalid_currency_type": "Tipo de moneda no válido"
         },
         "authentication": {
             "unauthorized": "Autenticación requerida",
@@ -66,7 +68,8 @@
         },
         "exchangeRate": {
             "no_rates_today": "No hay tasas de cambio configuradas para el día de hoy",
-            "missing_today_rates": "Faltan tasas de cambio para el día de hoy"
+            "missing_today_rates": "Faltan tasas de cambio para el día de hoy",
+            "incomplete_rates": "Las tasas de cambio están incompletas"
         }
     },
     "templates": {

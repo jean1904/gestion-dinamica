@@ -20,4 +20,6 @@ router.get('/today', currencyRateController.getTodayRates.bind(currencyRateContr
 
 router.post('/today', validateSaveTodayRates, currencyRateController.saveTodayRates.bind(currencyRateController));
 
+router.post('/convert-currency', currencyRateController.convertCurrency.bind(currencyRateController));
+
 export default router;

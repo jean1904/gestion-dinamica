@@ -43,4 +43,24 @@ export class CurrencyRateController {
             next(error);
         }
     }
+
+    async convertCurrency(req, res, next) {
+        try {
+            const { tenant_id } = req.user;
+            const { amount, from } = req.body;
+
+            const converted = await this.currencyRateService.convertCurrency(
+                tenant_id,
+                amount,
+                from
+            );
+
+            res.json({
+                success: true,
+                data: converted
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }

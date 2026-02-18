@@ -34,7 +34,9 @@
             "invalid_currency": "Invalid base currency for price calculation",
             "invalid_price_data": "The price data sent is incorrect. Check that all fields are valid.",
             "insufficient_stock": "Insufficient stock to perform the operation",
-            "invalid_quantity": "Quantity must be greater than 0"
+            "invalid_quantity": "Quantity must be greater than 0",
+            "invalid_amount": "Amount must be a positive number",
+            "invalid_currency_type": "Invalid currency type"
         },
         "authentication": {
             "unauthorized": "Authentication required",
@@ -66,7 +68,8 @@
         },
         "exchangeRate": {
             "no_rates_today": "No exchange rates configured for today",
-            "missing_today_rates": "Exchange rates for today are missing"
+            "missing_today_rates": "Exchange rates for today are missing",
+            "incomplete_rates": "The exchange rates are incomplete"
         }
     },
     "templates": {
