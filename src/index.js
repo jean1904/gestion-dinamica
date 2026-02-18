@@ -20,7 +20,14 @@ import batchEntryRoutes from '#modules/batchEntry/batchEntry.routes.js';
 import warehouseRoutes from '#modules/warehouse/warehouse.routes.js';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
+}));
+
+app.options('*', cors());
 app.use(express.json());
 app.use(i18n.init);
 app.use(languageMiddleware);
