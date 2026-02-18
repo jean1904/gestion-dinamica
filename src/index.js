@@ -27,7 +27,6 @@ app.use(cors({
   credentials: false
 }));
 
-app.options('*', cors());
 app.use(express.json());
 app.use(i18n.init);
 app.use(languageMiddleware);
